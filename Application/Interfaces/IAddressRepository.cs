@@ -5,5 +5,5 @@ namespace Application.Interfaces;
 
 public interface IAddressRepository : IRepository<Address>
 {
-
+                   
 }

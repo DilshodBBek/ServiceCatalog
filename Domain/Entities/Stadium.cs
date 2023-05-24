@@ -10,5 +10,7 @@ namespace Domain.Entities
 
         public Guid OwnerId { get; set; }
         public Owner Owner { get; set; }
+
+        public Address Addresses { get; set; }
     }
 }
