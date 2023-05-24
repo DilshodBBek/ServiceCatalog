@@ -33,10 +33,9 @@ namespace ServiceCatalogUI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 Owner mappedOwner = _mapper.Map<Owner>(owner);
 
-              var validationResult=  _validator.Validate(mappedOwner);
+                var validationResult = _validator.Validate(mappedOwner);
                 if (!validationResult.IsValid)
                 {
                     return BadRequest(validationResult);
