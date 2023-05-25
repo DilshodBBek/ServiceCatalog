@@ -6,5 +6,5 @@ public class OwnerCreateDTO: OwnerBaseDTO
     public string Password { get; set; }
     public string ConfirmPassword { get; set; }
 
-    //public Guid[] Roles { get; set; }
+   
 }

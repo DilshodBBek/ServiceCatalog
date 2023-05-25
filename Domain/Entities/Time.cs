@@ -8,4 +8,7 @@ public class Time:BaseAuditableEntity
     public DateTime EndDate { get; set; }
     public Guid ArenaId { get; set; }
     public Arena Arena { get; set; }
+
+    public string CustomerPhoneNumber { get; set; }
+    public string CustomerFullName { get; set; }
 }

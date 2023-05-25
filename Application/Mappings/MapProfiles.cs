@@ -16,22 +16,28 @@ public class MapProfiles : Profile
         CreateMap<AddressUpdateDTO, Address>().ReverseMap();
         CreateMap<AddressGetDTO, Address>().ReverseMap();
 
-        CreateMap<OwnerCreateDTO, Owner>().ReverseMap();
+        CreateMap<Owner,OwnerCreateDTO > ().ReverseMap()
+            .ForMember(x => x.Roles, t => t.Ignore());
+
         //.ForMember(x => x.Roles, t => t.Ignore());
         CreateMap<OwnerUpdateDTO, Owner>().ReverseMap()
             .ForMember(x => x.OwnerId, dto => dto.MapFrom(r => r.Id));
         CreateMap<OwnerGetDTO, Owner>().ReverseMap()
         .ForMember(x => x.OwnerId, dto => dto.MapFrom(r => r.Id));
 
-        CreateMap<RoleCreateDTO, Role>().ReverseMap();
+        CreateMap<Role, RoleCreateDTO>().ReverseMap()
+            .ForMember(x=>x.Permissions, t=>t.Ignore())
+            .ForMember(x => x.OwnerRoles, t => t.Ignore());
         CreateMap<RoleUpdateDTO, Role>().ReverseMap()
          .ForMember(x => x.RoleId, dto => dto.MapFrom(r => r.Id));
 
-        CreateMap<RoleGetDTO, Role>().ReverseMap()
-            .ForMember(x => x.RoleId, dto => dto.MapFrom(r => r.Id));
+        CreateMap<Role, RoleGetDTO>().ReverseMap()
+            .ForMember(x => x.OwnerRoles, dto => dto.Ignore());
 
         CreateMap<PermissionCreateDTO, Permission>().ReverseMap();
-        CreateMap<PermissionUpdateDTO, Permission>().ReverseMap();
-        CreateMap<PermissionGetDTO, Permission>().ReverseMap();
+        CreateMap<PermissionUpdateDTO, Permission>().ReverseMap()
+             .ForMember(x => x.PermissionId, dto => dto.MapFrom(r => r.Id));
+        CreateMap<PermissionGetDTO, Permission>().ReverseMap()
+             .ForMember(x => x.PermissionId, dto => dto.MapFrom(r => r.Id)); 
     }
 }

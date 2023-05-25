@@ -6,5 +6,5 @@ public class RoleBaseDTO
 {
     public string Name { get; set; }
 
-    public List<PermissionGetDTO> Permissions { get; set; }
+    public List<Guid> Permissions { get; set; }
 }

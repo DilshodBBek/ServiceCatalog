@@ -3,4 +3,6 @@
 public class RoleUpdateDTO : RoleBaseDTO
 {
     public Guid RoleId { get; set; }
+   
+
 }

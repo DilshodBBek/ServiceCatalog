@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces.Repositories;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Linq.Expressions;
 
 namespace Infrastructure.Services;
@@ -32,19 +33,24 @@ public class Repository<T> : IRepository<T> where T : class
 
     }
 
-    public virtual Task<IQueryable<T>> Get(Expression<Func<T, bool>> expression)
+    public virtual Task<IQueryable<T>> GetAsync(Expression<Func<T, bool>> expression)
     {
         return Task.FromResult(_catalogDb.Set<T>().Where(expression));
     }
 
-    public virtual async Task<bool> UpdateAsync(T entity)
+    public async Task<T?> GetByIdAsync(Guid id)
+    {
+        return await _catalogDb.Set<T>().FindAsync(id);
+    }
+
+    public virtual async Task<T?> UpdateAsync(T entity)
     {
         if (entity != null)
         {
             _catalogDb.Set<T>().Update(entity);
             await _catalogDb.SaveChangesAsync();
-            return true;
+            return entity;
         }
-        return false;
+        return null;
     }
 }
