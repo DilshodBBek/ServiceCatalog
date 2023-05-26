@@ -2,7 +2,6 @@
 using Application.Interfaces;
 using Application.ResponseModel;
 using Domain.Entities.IdentityEntities;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ServiceCatalogUI.Filters;
 
@@ -25,7 +24,7 @@ namespace ServiceCatalogUI.Controllers
         //[Authorize(Roles = "GetAllRole")]
         public async Task<ActionResult<ResponseCore<IEnumerable<RoleGetDTO>>>> GetAll()
         {
-           IEnumerable<Role> roles = await _roleRepository.GetAsync(x => true);
+            IEnumerable<Role> roles = await _roleRepository.GetAsync(x => true);
 
             IEnumerable<RoleGetDTO> mappedRoles = _mapper.Map<IEnumerable<RoleGetDTO>>(roles);
 
@@ -92,8 +91,13 @@ namespace ServiceCatalogUI.Controllers
                 else return BadRequest(new ResponseCore<string>(false, item + " Id not found"));
             }
             mappedRole = await _roleRepository.CreateAsync(mappedRole);
-            //var res = _mapper.Map<RoleGetDTO>(mappedRole);
-            return Ok(new ResponseCore<object>(mappedRole));
+            RoleGetDTO roleGetDTO = new()
+            {
+                Name = mappedRole.Name,
+                Permissions = mappedRole.Permissions.Select(x => x.Id).ToList(),
+                RoleId = mappedRole.Id
+            };
+            return Ok(new ResponseCore<object>(roleGetDTO));
         }
 
         [HttpDelete("[action]")]
